@@ -3,17 +3,33 @@ import firebase from 'firebase';
 
 import {
 	Button,
-	Container,
 	FormControl,
+	Grid,
 	Input,
 	InputLabel,
+	Paper,
+	Typography,
 } from '@material-ui/core/';
+import { makeStyles } from '@material-ui/core/styles';
 
 import Todo from './components/Todo';
 
 import db from './config/firebase';
 
+const useStyles = makeStyles((theme) => ({
+	root: {
+		flexGrow: 1,
+	},
+	paper: {
+		padding: theme.spacing(2),
+		margin: 'auto',
+		maxWidth: 500,
+	},
+}));
+
 export default function App() {
+	const classes = useStyles();
+
 	const [input, setInput] = useState('');
 	const [todos, setTodos] = useState([]);
 
@@ -44,29 +60,49 @@ export default function App() {
 	};
 
 	return (
-		<Container>
-			<h1>TODO List</h1>
-			<form>
-				<FormControl>
-					<InputLabel>Write a Todo</InputLabel>
-					<Input onChange={(e) => setInput(e.target.value)} value={input} />
-				</FormControl>
+		<div className={classes.root}>
+			<Paper className={classes.paper}>
+				<Grid container spacing={2}>
+					<Grid item xs={12} sm container>
+						<Grid item xs container direction='column' spacing={2}>
+							<Grid item xs>
+								<Typography gutterBottom variant='subtitle1'>
+									TODO List
+								</Typography>
+							</Grid>
 
-				<Button
-					disabled={!input}
-					onClick={addTodo}
-					type='submit'
-					variant='contained'
-					color='primary'>
-					Add Todo
-				</Button>
-			</form>
+							<Grid item>
+								<form>
+									<FormControl>
+										<InputLabel>Write a Todo</InputLabel>
+										<Input
+											onChange={(e) => setInput(e.target.value)}
+											value={input}
+										/>
+									</FormControl>
 
-			<ul>
-				{todos.map((todo) => (
-					<Todo key={todo.id} todo={todo} />
-				))}
-			</ul>
-		</Container>
+									<Button
+										disabled={!input}
+										onClick={addTodo}
+										type='submit'
+										variant='contained'
+										color='primary'>
+										Add Todo
+									</Button>
+								</form>
+							</Grid>
+
+							<Grid item>
+								<ul>
+									{todos.map((todo) => (
+										<Todo key={todo.id} todo={todo} />
+									))}
+								</ul>
+							</Grid>
+						</Grid>
+					</Grid>
+				</Grid>
+			</Paper>
+		</div>
 	);
 }

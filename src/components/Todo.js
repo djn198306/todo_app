@@ -12,7 +12,6 @@ import {
 	Modal,
 } from '@material-ui/core/';
 import {
-	Close as CloseIcon,
 	Done as DoneIcon,
 	Edit as EditIcon,
 	Delete as DeleteIcon,
@@ -43,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	paper: {
 		position: 'absolute',
-		width: 400,
+		width: 255,
 		backgroundColor: theme.palette.background.paper,
 		border: '2px solid #000',
 		boxShadow: theme.shadows[5],
@@ -95,11 +94,12 @@ export default function Todo(props) {
 				/>
 			</FormControl>
 
-			<IconButton aria-label='done' onClick={updateTodo} type='submit'>
+			<IconButton
+				aria-label='done'
+				className={classes.margin}
+				onClick={updateTodo}
+				type='submit'>
 				<DoneIcon fontSize='small' />
-			</IconButton>
-			<IconButton aria-label='close' onClick={handleClose}>
-				<CloseIcon fontSize='small' />
 			</IconButton>
 		</form>
 	);
