@@ -13,7 +13,7 @@ import Todo from './components/Todo';
 
 import db from './config/firebase';
 
-function App() {
+export default function App() {
 	const [input, setInput] = useState('');
 	const [todos, setTodos] = useState([]);
 
@@ -45,7 +45,7 @@ function App() {
 
 	return (
 		<Container>
-			<h1>Hello World</h1>
+			<h1>TODO List</h1>
 			<form>
 				<FormControl>
 					<InputLabel>Write a Todo</InputLabel>
@@ -63,12 +63,10 @@ function App() {
 			</form>
 
 			<ul>
-				{todos.map((todo, index) => (
-					<Todo key={index} todo={todo} />
+				{todos.map((todo) => (
+					<Todo key={todo.id} todo={todo} />
 				))}
 			</ul>
 		</Container>
 	);
 }
-
-export default App;
