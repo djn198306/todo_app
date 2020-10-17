@@ -22,12 +22,17 @@ function App() {
 		db.collection('todos')
 			.orderBy('timestamp', 'desc')
 			.onSnapshot((snapshot) => {
-				setTodos(snapshot.docs.map((doc) => doc.data().todo));
+				setTodos(
+					snapshot.docs.map((doc) => ({
+						id: doc.id,
+						text: doc.data().todo,
+					}))
+				);
 			});
 	}, []);
 
-	const addTodo = (event) => {
-		event.preventDefault();
+	const addTodo = (e) => {
+		e.preventDefault();
 
 		// write to database
 		db.collection('todos').add({
@@ -44,10 +49,7 @@ function App() {
 			<form>
 				<FormControl>
 					<InputLabel>Write a Todo</InputLabel>
-					<Input
-						onChange={(event) => setInput(event.target.value)}
-						value={input}
-					/>
+					<Input onChange={(e) => setInput(e.target.value)} value={input} />
 				</FormControl>
 
 				<Button
@@ -62,7 +64,7 @@ function App() {
 
 			<ul>
 				{todos.map((todo, index) => (
-					<Todo key={index} text={todo} />
+					<Todo key={index} todo={todo} />
 				))}
 			</ul>
 		</Container>
