@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import firebase from 'firebase';
 
 import {
@@ -10,6 +10,7 @@ import {
 	Paper,
 	Typography,
 } from '@material-ui/core/';
+
 import { makeStyles } from '@material-ui/core/styles';
 
 import Todo from './components/Todo';
@@ -30,22 +31,8 @@ const useStyles = makeStyles((theme) => ({
 export default function App() {
 	const classes = useStyles();
 
-	const [input, setInput] = useState('');
-	const [todos, setTodos] = useState([]);
-
-	useEffect(() => {
-		// reads from database
-		db.collection('todos')
-			.orderBy('timestamp', 'desc')
-			.onSnapshot((snapshot) => {
-				setTodos(
-					snapshot.docs.map((doc) => ({
-						id: doc.id,
-						text: doc.data().todo,
-					}))
-				);
-			});
-	}, []);
+	const [input, setInput] = React.useState('');
+	const [todos, setTodos] = React.useState([]);
 
 	const addTodo = (e) => {
 		e.preventDefault();
@@ -58,6 +45,20 @@ export default function App() {
 
 		setInput('');
 	};
+
+	React.useEffect(() => {
+		// reads from database
+		db.collection('todos')
+			.orderBy('timestamp', 'desc')
+			.onSnapshot((snapshot) => {
+				setTodos(
+					snapshot.docs.map((doc) => ({
+						id: doc.id,
+						text: doc.data().todo,
+					}))
+				);
+			});
+	}, []);
 
 	return (
 		<div className={classes.root}>

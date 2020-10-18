@@ -11,11 +11,13 @@ import {
 	ListItemText,
 	Modal,
 } from '@material-ui/core/';
+
 import {
 	Done as DoneIcon,
 	Edit as EditIcon,
 	Delete as DeleteIcon,
 } from '@material-ui/icons/';
+
 import { makeStyles } from '@material-ui/core/styles';
 
 import db from '../config/firebase';
